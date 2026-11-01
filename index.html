@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Генератор кодов</title>
+<title>Code Craft — Генератор кодов</title>
 <style>
   :root {
     --bg: #0f1220;
@@ -27,9 +27,13 @@
     color: var(--text);
     min-height: 100vh;
     padding: 24px 16px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
-  .wrap { max-width: 1100px; margin: 0 auto; }
-  header { text-align: center; margin-bottom: 24px; }
+  .wrap { max-width: 1100px; width: 100%; margin: 0 auto; }
+  
+  header { text-align: center; margin-bottom: 24px; position: relative; }
   .lang-bar {
     display: flex;
     justify-content: center;
@@ -54,8 +58,41 @@
     border-color: transparent;
     font-weight: 600;
   }
+
+  /* Брендинг iField */
+  .brand-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .logo-text {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, var(--text), var(--muted));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.85rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 15px rgba(108,140,255,.3);
+  }
+
   h1 {
-    font-size: 2.3rem;
+    font-size: 2.1rem;
     letter-spacing: .5px;
     background: linear-gradient(90deg, #8fb0ff, #b28cff, #8fb0ff);
     background-size: 200% auto;
@@ -65,7 +102,7 @@
     animation: shine 5s linear infinite;
   }
   @keyframes shine { to { background-position: 200% center; } }
-  .subtitle { color: var(--muted); margin-top: 8px; font-size: 1rem; }
+  .subtitle { color: var(--muted); margin-top: 6px; font-size: .95rem; }
 
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
   @media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
@@ -87,7 +124,7 @@
   }
   .section { margin-top: 20px; }
   .section:first-of-type { margin-top: 0; }
-  .type-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); gap: 10px; }
+  .type-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
   .type-btn {
     background: var(--panel);
     border: 1px solid var(--border);
@@ -194,12 +231,40 @@
   .actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
   .btn-ghost {
     flex: 1;
-    min-width: 120px;
+    min-width: 110px;
     background: var(--panel);
     border: 1px solid var(--border);
     color: var(--text);
   }
   .btn-ghost:hover { border-color: var(--accent); color: #fff; }
+
+  /* Футер iField_Lab */
+  .main-footer {
+    margin-top: 40px;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .footer-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: 999px;
+  }
+  .lab-name { font-weight: 700; color: var(--text); }
+  .footer-content a {
+    color: var(--accent2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: .2s;
+  }
+  .footer-content a:hover { color: var(--accent); text-decoration: underline; }
+
   .toast {
     position: fixed;
     left: 50%;
@@ -227,6 +292,12 @@
       <button class="lang-btn" data-lang="en">🇬🇧 English</button>
       <button class="lang-btn" data-lang="uk">🇺🇦 Українська</button>
     </div>
+    
+    <div class="brand-box">
+      <span class="logo-text">iField</span>
+      <div class="logo-icon">CC</div>
+    </div>
+
     <h1 data-i18n="title">Генератор кодов</h1>
     <p class="subtitle" data-i18n="subtitle">Создавайте промокоды, пароли, серийники и UUID мгновенно</p>
   </header>
@@ -246,7 +317,7 @@
         <input type="number" id="length" value="12" min="4" max="128">
 
         <label data-i18n="separator">Разделитель</label>
-        <input type="text" id="separator" value="-" maxlength="3" id="sepInput">
+        <input type="text" id="separator" value="-" maxlength="3">
 
         <label data-i18n="prefix">Префикс</label>
         <input type="text" id="prefix" placeholder="Например: PROMO-">
@@ -287,6 +358,14 @@
   </div>
 </div>
 
+<footer class="main-footer">
+  <div class="footer-content">
+    <span class="lab-name">iField_lab</span>
+    <span>by</span>
+    <a href="https://github.com/i-field" target="_blank">Kiiashko Roman</a>
+  </div>
+</footer>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -317,7 +396,6 @@ const I18N = {
     toastEmpty: 'Сначала сгенерируйте коды',
     toastGenerated: 'Сгенерировано: ',
     toastQR: 'Открываю QR-код…',
-    toastLimit: 'Не удалось сгенерировать столько уникальных кодов',
     types: {
       promo: 'Промокод',
       serial: 'Серийник',
@@ -353,7 +431,6 @@ const I18N = {
     toastEmpty: 'Generate codes first',
     toastGenerated: 'Generated: ',
     toastQR: 'Opening QR code…',
-    toastLimit: 'Could not generate that many unique codes',
     types: {
       promo: 'Promo code',
       serial: 'Serial key',
@@ -389,7 +466,6 @@ const I18N = {
     toastEmpty: 'Спочатку згенеруйте коди',
     toastGenerated: 'Згенеровано: ',
     toastQR: 'Відкриваю QR-код…',
-    toastLimit: 'Не вдалося згенерувати стільки унікальних кодів',
     types: {
       promo: 'Промокод',
       serial: 'Серійник',
